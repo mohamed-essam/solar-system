@@ -8,7 +8,7 @@
 #include <vector>
 class Shape{
 public:
-	static void generateSphere(float radiusSize, unsigned int ringsNumber, unsigned int sectorsNumber, GLfloat*& vs, GLint*& e, int& vSize, int& eSize);
+	static void generateSphere(float radiusSize, unsigned int ringsNumber, unsigned int sectorsNumber, GLfloat*& vs, GLint*& e);
 	GLfloat* verts;
 	GLint* indices;
 	int attributeCount;
@@ -24,18 +24,17 @@ public:
 	glm::vec3 rotationRate;
 	glm::vec3 scale;
 	glm::vec3 finalTranslation;
-	glm::vec3 color;
+//	glm::vec3 color;
 	GLuint bufferObject;
 	GLuint VAO;
 	GLuint indicesBufferObject;
 	Texture* tex;
 	GLfloat gloss;
-
-	~Shape();
-	Shape();
 	Shape(int, int, int);
 	void render(GLuint, GLuint, glm::mat4&, glm::mat4&, GLuint, GLuint);
 	void update(float);
 	void generateBuffers();
+	Shape(const Shape&);
 	Shape& operator=(const Shape&);
+	~Shape();
 };

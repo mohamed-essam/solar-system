@@ -1,6 +1,6 @@
 #include "Shape.h"
 
-Shape::Shape() {}
+
 Shape& Shape::operator=(const Shape& sh) {
 	vertexCount = sh.vertexCount;
 	attributeCount = sh.attributeCount;
@@ -28,7 +28,33 @@ Shape& Shape::operator=(const Shape& sh) {
 	gloss = sh.gloss;
 	return *this;
 }
-
+Shape::Shape(const Shape & sh)
+{
+	vertexCount = sh.vertexCount;
+	attributeCount = sh.attributeCount;
+	verts = new GLfloat[vertexCount * attributeCount];
+	for (int i = 0; i < attributeCount * vertexCount; i++)
+	{
+		verts[i] = sh.verts[i];
+	}
+	modelMatrix = sh.modelMatrix;
+	position = sh.position;
+	velocity = sh.velocity;
+	rotation = sh.rotation;
+	rotationRate = sh.rotationRate;
+	rotationSelf = sh.rotationSelf;
+	rotationSelfRate = sh.rotationSelfRate;
+	scale = sh.scale;
+	bufferObject = sh.bufferObject;
+	finalTranslation = sh.finalTranslation;
+	indexCount = sh.indexCount;
+	indices = new GLint[indexCount];
+	for (int i = 0; i < indexCount; i++)
+	{
+		indices[i] = sh.indices[i];
+	}
+	gloss = sh.gloss;
+}
 Shape::Shape(int vc, int ac, int ic) {
 	vertexCount = vc;
 	attributeCount = ac;
@@ -65,13 +91,16 @@ void Shape::generateBuffers() {
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 }
 
-void Shape::generateSphere(float radiusSize, unsigned int ringsNumber, unsigned int sectorsNumber, GLfloat*& vs, GLint*& e, int& vSize, int& eSize)
+
+
+void Shape::generateSphere(float radiusSize, unsigned int ringsNumber, unsigned int sectorsNumber, GLfloat*& vs, GLint*& e)
 {
-	vSize = ringsNumber * sectorsNumber * 3 * 3 * 2;
-	eSize = (ringsNumber - 1) * (sectorsNumber - 1) * 6;
+	const unsigned int sectoresBoundry = (sectorsNumber - 1), ringsBoundry = (ringsNumber - 1);
+	const unsigned vSize = ringsNumber * sectorsNumber * 3 * 3 * 2;
+	const unsigned eSize = sectoresBoundry *ringsBoundry * 6;
 	vs = new GLfloat[vSize];
 	e = new GLint[eSize];
-	const unsigned int sectoresBoundry = (sectorsNumber - 1), ringsBoundry = (ringsNumber - 1);
+	
 	float const R = 1.0f / ringsBoundry;
 	float const S = 1.0f / sectoresBoundry;
 
@@ -131,6 +160,6 @@ void Shape::render(GLuint matrixID, GLuint colorID, glm::mat4& projectionMatrix,
 	glUniform1f(glossID, gloss);
 	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
 	glUniformMatrix4fv(modelID, 1, GL_FALSE, &modelMatrix[0][0]);
-	glUniform3f(colorID, color.x, color.y, color.z);
+	//glUniform3f(colorID, color.x, color.y, color.z);
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
 }

@@ -24,8 +24,8 @@ class Renderer
 	GLuint glossID;
 	float lastTime;
 	FPCamera* mCamera;
-	Shape* shapes;
-	int shapeCount;
+	Shape** shapes;
+	int shapesCount;
 	glm::mat4 projectionMatrix;
 	glm::vec3 lightPosition;
 	glm::vec3 lightColor;
@@ -34,11 +34,12 @@ public:
 
 	void Initialize();
 	void Draw();
-	void Cleanup();
+	//void Cleanup();
 	void handleMouseScroll(bool up);
 	void Update(double);
 	void UpdateAspectRatio(float);
 	void handleKeyboardPress(int, int);
 	void handleMouseMove(double, double);
 	FPCamera* getCamera();
+	~Renderer();
 };
