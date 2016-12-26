@@ -78,8 +78,10 @@ void ApplicationManager::updateScreen() {
  {
 	 return vec2(screenWidth,screenHeight);
  }
- void ApplicationManager::updateMousePosition(vec2)
+ void ApplicationManager::resetMousePosition()
  {
+	 mouseX = screenWidth / 2;
+	 mouseY = screenHeight / 2;
  }
  GLFWwindow * ApplicationManager::getWindow()
  {

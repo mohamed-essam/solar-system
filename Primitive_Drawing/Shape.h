@@ -8,9 +8,9 @@
 #include <vector>
 class Shape{
 public:
-	static void generateSphere(float radiusSize, unsigned int ringsNumber, unsigned int sectorsNumber, GLfloat*& vs, GLint*& e);
+	static void generateSphere(float radiusSize, unsigned int ringsNumber, unsigned int sectorsNumber, GLfloat*& vs, GLuint*& e);
 	GLfloat* verts;
-	GLint* indices;
+	GLuint* indices;
 	int attributeCount;
 	int vertexCount;
 	int indexCount;

@@ -14,8 +14,8 @@ void Renderer::Initialize()
 	shapes = new Shape*[shapesCount];
 
 
-	const unsigned vSize = 90 * 90 * 3 * 3 * 2;
-	const unsigned eSize = 90 * 90 * 6;
+	const unsigned vSize = 90 * 90 *( 3 + 3+ 2);
+	const unsigned eSize =89 * 89 * 6;
 
 	shapes[0] = new Shape(vSize / 8, 8, eSize);
 	Shape::generateSphere(1, 90, 90, shapes[0]->verts, shapes[0]->indices);

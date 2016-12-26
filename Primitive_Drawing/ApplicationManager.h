@@ -19,7 +19,7 @@ class ApplicationManager
 public:
 	static vec2 getMousePosition();
 	static vec2 getscreenResolution();
-	static void updateMousePosition(vec2);
+	static void resetMousePosition();
 	static GLFWwindow* getWindow();
 	static Renderer* getRenderer();
 	void initialize();
