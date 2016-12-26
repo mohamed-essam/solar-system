@@ -117,9 +117,9 @@ void Shape::generateSphere(float radiusSize, unsigned int ringsNumber, unsigned 
 		vs[verticesSizeCounter++] = y * radiusSize;
 		vs[verticesSizeCounter++] = z * radiusSize;
 
-		vs[verticesSizeCounter++] = x;
-		vs[verticesSizeCounter++] = y;
-		vs[verticesSizeCounter++] = z;
+		vs[verticesSizeCounter++] = -x;
+		vs[verticesSizeCounter++] = -y;
+		vs[verticesSizeCounter++] = -z;
 
 		vs[verticesSizeCounter++] = s*S;
 		vs[verticesSizeCounter++] = r*R;

@@ -28,6 +28,7 @@ void Renderer::Initialize()
 	shapes[0]->scale = glm::vec3(1.0f);
 	shapes[0]->gloss = 0.0f;
 	shapes[0]->isSkyBox = false;
+	shapes[0]->generateBuffers();
 
 	shapes[10] = new Shape(*shapes[0]);
 	shapes[10]->rotationSelfRate = glm::vec3(0.0f);
