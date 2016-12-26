@@ -5,11 +5,12 @@
 #include <glm/gtx/transform.hpp>
 #include <string.h>
 #include "texture.h"
-
+#include <vector>
 class Shape{
 public:
+	static void generateSphere(float radiusSize, unsigned int ringsNumber, unsigned int sectorsNumber, GLfloat*& vs, GLint*& e, int& vSize, int& eSize);
 	GLfloat* verts;
-	GLuint* indices;
+	GLint* indices;
 	int attributeCount;
 	int vertexCount;
 	int indexCount;

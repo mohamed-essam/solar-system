@@ -1,6 +1,6 @@
 #include "Shape.h"
 
-Shape::Shape(){}
+Shape::Shape() {}
 Shape& Shape::operator=(const Shape& sh) {
 	vertexCount = sh.vertexCount;
 	attributeCount = sh.attributeCount;
@@ -20,7 +20,7 @@ Shape& Shape::operator=(const Shape& sh) {
 	bufferObject = sh.bufferObject;
 	finalTranslation = sh.finalTranslation;
 	indexCount = sh.indexCount;
-	indices = new GLuint[indexCount];
+	indices = new GLint[indexCount];
 	for (int i = 0; i < indexCount; i++)
 	{
 		indices[i] = sh.indices[i];
@@ -44,7 +44,7 @@ Shape::Shape(int vc, int ac, int ic) {
 	finalTranslation = glm::vec3(0.0f);
 	scale = glm::vec3(1.0f);
 	indexCount = ic;
-	indices = new GLuint[indexCount];
+	indices = new GLint[indexCount];
 	gloss = 1.0f;
 }
 
@@ -56,13 +56,55 @@ void Shape::generateBuffers() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)* attributeCount * vertexCount, verts, GL_STATIC_DRAW);
 	glGenBuffers(1, &indicesBufferObject);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesBufferObject);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)* indexCount, indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLint)* indexCount, indices, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)0);
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(6 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+}
+
+void Shape::generateSphere(float radiusSize, unsigned int ringsNumber, unsigned int sectorsNumber, GLfloat*& vs, GLint*& e, int& vSize, int& eSize)
+{
+	vSize = ringsNumber * sectorsNumber * 3 * 3 * 2;
+	eSize = (ringsNumber - 1) * (sectorsNumber - 1) * 6;
+	vs = new GLfloat[vSize];
+	e = new GLint[eSize];
+	const unsigned int sectoresBoundry = (sectorsNumber - 1), ringsBoundry = (ringsNumber - 1);
+	float const R = 1.0f / ringsBoundry;
+	float const S = 1.0f / sectoresBoundry;
+
+	unsigned int r, s;
+	unsigned int verticesSizeCounter = 0;
+	unsigned int indicesCounter = 0;
+	float x, y, z;
+	for (r = 0; r < ringsNumber; ++r) for (s = 0; s < sectorsNumber; ++s) {
+		y = sin(-3.1415 / 2 + 3.1415 * r * R);
+		x = cos(2 * 3.1415 * s * S) * sin(3.1415 * r * R);
+		z = sin(2 * 3.1415 * s * S) * sin(3.1415 * r * R);
+
+		vs[verticesSizeCounter++] = x * radiusSize;
+		vs[verticesSizeCounter++] = y * radiusSize;
+		vs[verticesSizeCounter++] = z * radiusSize;
+
+		vs[verticesSizeCounter++] = x;
+		vs[verticesSizeCounter++] = y;
+		vs[verticesSizeCounter++] = z;
+
+		vs[verticesSizeCounter++] = s*S;
+		vs[verticesSizeCounter++] = r*R;
+
+		if ((r != ringsBoundry) && (s != sectoresBoundry))
+		{
+			e[indicesCounter++] = r * sectorsNumber + s; //1
+			e[indicesCounter++] = r * sectorsNumber + (s + 1); //2	
+			e[indicesCounter++] = (r + 1) * sectorsNumber + (s + 1); //3
+			e[indicesCounter++] = r * sectorsNumber + s; //1
+			e[indicesCounter++] = (r + 1) * sectorsNumber + (s + 1); //3
+			e[indicesCounter++] = (r + 1) * sectorsNumber + s; //4
+		}
+	}
 }
 
 Shape::~Shape() {

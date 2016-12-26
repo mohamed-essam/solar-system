@@ -9,7 +9,7 @@
 #include "FPCamera.h"
 #include "texture.h"
 #include "Light.h"
-#include <vector>
+
 
 class Renderer
 {
@@ -31,8 +31,6 @@ class Renderer
 	glm::vec3 lightColor;
 	glm::vec3 ambientColor;
 public:
-	Renderer();
-	~Renderer();
 
 	void Initialize();
 	void Draw();

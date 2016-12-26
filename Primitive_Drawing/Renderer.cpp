@@ -1,79 +1,5 @@
 #include "Renderer.h"
 
-void generateSphere(GLfloat*& vs, GLuint*& e, int& vSize, int& eSize) {
-	int radius = 1, rings = 90, sectors = 90;
-	std::vector<GLfloat> vertices;
-	std::vector<GLfloat> normals;
-	std::vector<GLfloat> texcoords;
-	std::vector<GLushort> indices;
-	float const R = 1. / (float)(rings - 1);
-	float const S = 1. / (float)(sectors - 1);
-	int r, s;
-
-	vertices.resize(rings * sectors * 3);
-	normals.resize(rings * sectors * 3);
-	texcoords.resize(rings * sectors * 2);
-	std::vector<GLfloat>::iterator v = vertices.begin();
-	std::vector<GLfloat>::iterator n = normals.begin();
-	std::vector<GLfloat>::iterator t = texcoords.begin();
-	for (r = 0; r < rings; r++) for (s = 0; s < sectors; s++) {
-		float const y = sin(-3.1415 / 2 + 3.1415 * r * R);
-		float const x = cos(2 * 3.1415 * s * S) * sin(3.1415 * r * R);
-		float const z = sin(2 * 3.1415 * s * S) * sin(3.1415 * r * R);
-
-		*t++ = s*S;
-		*t++ = r*R;
-
-		*v++ = x * radius;
-		*v++ = y * radius;
-		*v++ = z * radius;
-
-		*n++ = x;
-		*n++ = y;
-		*n++ = z;
-	}
-
-	indices.resize(rings * sectors * 6);
-	std::vector<GLushort>::iterator i = indices.begin();
-	for (r = 0; r < rings - 1; r++) for (s = 0; s < sectors - 1; s++) {
-		*i++ = r * sectors + s; //1
-		*i++ = r * sectors + (s + 1); //2
-		*i++ = (r + 1) * sectors + (s + 1); //3
-		*i++ = r * sectors + s; //1
-		*i++ = (r + 1) * sectors + (s + 1); //3
-		*i++ = (r + 1) * sectors + s; //4
-	}
-	vs = new GLfloat[vertices.size() + normals.size() + texcoords.size()];
-	e = new GLuint[indices.size()];
-	for (int i = 0; i < vertices.size() + normals.size() + texcoords.size(); i++)
-	{
-		if (i % 8 < 3) {
-			vs[i] = vertices[(i / 8) * 3 + i % 8];
-		}
-		else if (i % 8 < 6) {
-			vs[i] = normals[(i / 8) * 3 + i % 8 - 3];
-		}
-		else {
-			vs[i] = texcoords[(i / 8) * 2 + i % 8 - 6];
-		}
-	}
-	for (int i = 0; i < indices.size(); i++)
-	{
-		e[i] = indices[i];
-	}
-	vSize = vertices.size() + normals.size() + texcoords.size();
-	eSize = indices.size();
-}
-
-
-Renderer::Renderer()
-{
-
-}
-
-Renderer::~Renderer()
-{
-}
 
 void Renderer::UpdateAspectRatio(float ar) {
 	projectionMatrix = glm::perspective(45.0f, ar, 0.1f, 10000.0f);
@@ -89,9 +15,9 @@ void Renderer::Initialize()
 	shapeCount = 11;
 
 	GLfloat* v;
-	GLuint* e;
+	GLint* e;
 	int vc, ec;
-	generateSphere(v, e, vc, ec);
+	Shape::generateSphere(1,90,90,v, e, vc, ec);
 	shapes[0] = Shape(vc / 8, 8, ec);
 	shapes[0].color = glm::vec3(1.0f, 1.0f, 0.0f);
 	for (int i = 3; i < 6; i++)
