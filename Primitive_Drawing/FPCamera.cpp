@@ -56,7 +56,7 @@ void FPCamera::UpdateViewMatrix() {
 	mViewMatrix = lookAt(mPosition, center, mUp);
 }
 
-void FPCamera::Update(double time) {
+void FPCamera::Update(float time) {
 	Walk(velocity.z * time);
 	Strafe(velocity.x * time);
 	Yaw(mRotation.yaw);

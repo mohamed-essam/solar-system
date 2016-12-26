@@ -8,8 +8,8 @@ class ApplicationManager
 	int keyPressed;
 	static float mouseX, mouseY;
 	float screenRatio;
-	static float screenWidth;
-	static float screenHeight;
+	static int screenWidth;
+	static int screenHeight;
 	static Renderer* mRenderer;
 	double mTime;
 	static GLFWwindow* mWindow;

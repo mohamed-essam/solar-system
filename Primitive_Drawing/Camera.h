@@ -41,7 +41,7 @@ public:
 	void virtual Fly(float distance) = 0;
 
 	void virtual UpdateViewMatrix() = 0;
-	void virtual Update(double time) = 0;
+	void virtual Update(float time) = 0;
 
 	void setVelocity(float, float, float);
 	void setRotation(float, float, float);

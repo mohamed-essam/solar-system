@@ -6,34 +6,39 @@
 #include <string.h>
 #include "texture.h"
 #include <vector>
-class Shape{
-public:
-	static void generateSphere(float radiusSize, unsigned int ringsNumber, unsigned int sectorsNumber, GLfloat*& vs, GLuint*& e);
+using namespace glm;
+class Shape {
 	GLfloat* verts;
 	GLuint* indices;
+	int ID;
 	int attributeCount;
 	int vertexCount;
-	int indexCount;
-	bool isSkyBox;
-	glm::mat4 modelMatrix;
-	glm::vec3 position;
-	glm::vec3 velocity;
-	glm::vec3 rotationSelf;
-	glm::vec3 rotationSelfRate;
-	glm::vec3 rotation;
-	glm::vec3 rotationRate;
-	glm::vec3 scale;
-	glm::vec3 finalTranslation;
-//	glm::vec3 color;
-	GLuint bufferObject;
+	int indicesCount;
+	bool skyBox;
+	mat4 modelMatrix;
+	vec3 position;
+	vec3 velocity;
+	vec3 rotationSelf;
+	vec3 rotationSelfRate;
+	vec3 rotation;
+	vec3 rotationRate;
+	vec3 scale;
+	vec3 finalTranslation;
+	GLuint VO;
 	GLuint VAO;
 	GLuint indicesBufferObject;
-	Texture* tex;
+	Texture* texture;
 	GLfloat gloss;
+	static void generateSphere(float radiusSize, unsigned int ringsNumber, unsigned int sectorsNumber, GLfloat*& vs, GLuint*& e);
+	void generateBuffers();
+public:
+	static void generateShape(Shape*&, Shape**, int);
+	bool isSkyBox()const;
+	vec3 getScale()const;
+	mat4 getModelMatrix()const;
 	Shape(int, int, int);
 	void render(GLuint, GLuint, glm::mat4&, glm::mat4&, GLuint, GLuint);
 	void update(float);
-	void generateBuffers();
 	Shape(const Shape&);
 	Shape& operator=(const Shape&);
 	~Shape();

@@ -20,7 +20,7 @@ public:
 	void Fly(float distance);
 
 	void UpdateViewMatrix();
-	void Update(double time);
+	void Update(float time);
 
 	~FPCamera();
 };

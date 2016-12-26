@@ -9,7 +9,7 @@
 #include "FPCamera.h"
 #include "texture.h"
 #include "Light.h"
-
+#include"CollisionDetector.h"
 
 class Renderer
 {
@@ -26,20 +26,19 @@ class Renderer
 	FPCamera* mCamera;
 	Shape** shapes;
 	int shapesCount;
-	glm::mat4 projectionMatrix;
-	glm::vec3 lightPosition;
-	glm::vec3 lightColor;
-	glm::vec3 ambientColor;
+	mat4 projectionMatrix;
+	vec3 lightPosition;
+	vec3 lightColor;
+	vec3 ambientColor;
 public:
 
 	void Initialize();
 	void Draw();
-	//void Cleanup();
 	void handleMouseScroll(bool up);
-	void Update(double);
+	void Update(float);
 	void UpdateAspectRatio(float);
 	void handleKeyboardPress(int, int);
-	void handleMouseMove(double, double);
+	void handleMouseMove(float, float);
 	FPCamera* getCamera();
 	~Renderer();
 };

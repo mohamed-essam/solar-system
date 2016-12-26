@@ -59,7 +59,7 @@ void TPCamera::setDistance(float distance) {
 	mDistance = distance;
 }
 
-void TPCamera::Update(double time) {
+void TPCamera::Update(float time) {
 	Yaw(mRotation.yawChange*time);
 	Pitch(mRotation.pitchChange*time);
 	Roll(mRotation.rollChange*time);

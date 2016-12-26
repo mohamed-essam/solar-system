@@ -3,8 +3,8 @@
 #include"EventHandler.h"
 using namespace std;
 
- float ApplicationManager:: screenWidth=0;
- float ApplicationManager::screenHeight=0;
+ int ApplicationManager:: screenWidth=0;
+ int ApplicationManager::screenHeight=0;
  Renderer* ApplicationManager::mRenderer = 0;
  float ApplicationManager::mouseX = 0, ApplicationManager::mouseY = 0;
  GLFWwindow* ApplicationManager::mWindow=0;
@@ -18,7 +18,7 @@ void ApplicationManager::initialize() {
 }
 
 void ApplicationManager::updateScreen() {
-	double time = glfwGetTime() - mTime;
+	float time = (float)(glfwGetTime() - mTime);
 	mTime = glfwGetTime();
 	mRenderer->Update(time);
 	mRenderer->getCamera()->setRotation(0.0, 0.0, 0.0);
@@ -47,8 +47,8 @@ void ApplicationManager::updateScreen() {
 	 screenRatio = (float)mode->width / (mode->height);
 	 screenWidth = mode->width;
 	 screenHeight = mode->height;
-	 mouseX = screenWidth / 2;
-	 mouseY = screenHeight / 2;
+	 mouseX = (float)screenWidth / 2;
+	 mouseY = (float)screenHeight / 2;
 
 	 mWindow = glfwCreateWindow(screenWidth, screenHeight, "3D Solar System", NULL, NULL);
 	
@@ -80,8 +80,8 @@ void ApplicationManager::updateScreen() {
  }
  void ApplicationManager::resetMousePosition()
  {
-	 mouseX = screenWidth / 2;
-	 mouseY = screenHeight / 2;
+	 mouseX =(float) screenWidth / 2;
+	 mouseY = (float)screenHeight / 2;
  }
  GLFWwindow * ApplicationManager::getWindow()
  {
