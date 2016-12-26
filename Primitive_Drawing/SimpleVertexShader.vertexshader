@@ -1,0 +1,33 @@
+#version 330 core
+
+// Input vertex data, different for all executions of this shader.
+//refers to the buffer we use to feed the vertexPosition_modelspace attribute. 
+//Each vertex can have numerous attributes : A position, one or several colours, one or several texture coordinates, lots of other things. 
+// OpenGL doesn’t know what a colour is : it just sees a vec3. So we have to tell him which buffer corresponds to which input. 
+//We do that by setting the layout to the same value as the first parameter to glVertexAttribPointer. 
+
+
+layout(location = 0) in vec3 vertexPosition_modelspace;
+layout(location = 1) in vec2 vertexTexCord;
+layout(location = 2) in vec3 normal;
+uniform mat4 MVP;
+uniform mat4 ModelMat;
+
+out vec3 Normal;
+out vec3 pos;
+out vec2 TexCord;
+
+//in: means that this is some input data
+//vertexPosition_modelspace: could be anything else. It will contain the position of the vertex for each run of the vertex shader.
+
+void main(){
+
+	//gl_Position is one of the few built-in variables : you have to assign some value to it. 
+	//Everything else is optional; we’ll see what “everything else” means later.
+
+    gl_Position = MVP * vec4(vertexPosition_modelspace, 1);
+	Normal = normalize((ModelMat * vec4(normal,0)).xyz);
+	pos = (ModelMat * vec4(vertexPosition_modelspace,1)).xyz;
+	TexCord = vertexTexCord;
+}
+

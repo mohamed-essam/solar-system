@@ -1,0 +1,37 @@
+#version 330 core
+
+in vec3 pos;
+in vec3 Normal;
+in vec2 TexCord;
+
+out vec3 c;
+uniform vec3 COLOR;
+uniform vec3 LIGHT_COLOR;
+uniform vec3 LIGHT_POSITION;
+uniform vec3 AMBIENT_LIGHT_COLOR;
+uniform vec3 CAMERA_POSITION;
+uniform float GLOSS;
+
+uniform sampler2D mySampler;
+
+void main()
+{
+	vec3 Color = texture(mySampler, TexCord).rgb;
+	vec3 A = AMBIENT_LIGHT_COLOR * Color;
+
+	vec3 L = normalize(LIGHT_POSITION - pos);
+	float cosTheta = clamp(dot(L, Normal), 0, 1);
+	vec3 D = LIGHT_COLOR * Color * cosTheta;
+
+	vec3 R = reflect(-L, Normal);
+	vec3 V = normalize(CAMERA_POSITION - pos);
+	if(dot(R,V) > 0)
+		cosTheta = clamp(pow(dot(R,V), 50), 0, 1);
+	else
+		cosTheta = 0;
+	vec3 S = LIGHT_COLOR * cosTheta;
+
+	float att = exp(-pow((length(LIGHT_POSITION - pos) / 100),2));
+
+	c = A + att * (D + (GLOSS * S));
+}
