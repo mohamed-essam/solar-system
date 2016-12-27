@@ -24,9 +24,9 @@ Camera::CameraRotation Camera::getRotation()
 }
 void Camera::setRotation(float p, float y, float r)
 {
-	mRotation.pitch = p;
-	mRotation.yaw = y;
-	mRotation.roll = r;
+	mRotation.pitchChange = p;
+	mRotation.yawChange = y;
+	mRotation.rollChange = r;
 }
 
 void Camera::setPosition(float x, float y, float z)

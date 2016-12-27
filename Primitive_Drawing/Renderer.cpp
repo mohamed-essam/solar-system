@@ -118,5 +118,5 @@ void Renderer::handleKeyboardPress(int key, int action) {
 }
 
 void Renderer::handleMouseMove(float movex, float movey) {
-	mCamera->setRotation(movey / 2, movex / 2, mCamera->getRotation().roll);
+	mCamera->setRotation(movey * 50, movex * 50, mCamera->getRotation().roll);
 }
