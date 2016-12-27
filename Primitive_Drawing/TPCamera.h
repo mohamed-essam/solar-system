@@ -7,7 +7,7 @@ class TPCamera : public Camera
 	float mDistance;
 public:
 	TPCamera();
-
+	float getDistance();
 	void Yaw(float angle);
 	void Pitch(float angle);
 	void Roll(float angle);

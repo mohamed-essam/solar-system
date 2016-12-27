@@ -34,6 +34,16 @@ void Camera::setPosition(float x, float y, float z)
 	mPosition = vec3(x, y, z);
 }
 
+void Camera::copy(const Camera & secondCamera)
+{
+	this->mDirection = secondCamera.mDirection;
+	this->mPosition = secondCamera.mPosition;
+	this->mRight = secondCamera.mRight;
+	this->mRotation = secondCamera.mRotation;
+	this->mUp = secondCamera.mUp;
+	this->mViewMatrix = secondCamera.mViewMatrix;
+}
+
 void Camera::setVelocity(float x, float y, float z)
 {
 	velocity = vec3(x, y, z);

@@ -27,11 +27,11 @@ void Renderer::Initialize()
 	modelMatID = glGetUniformLocation(programID, "ModelMat");
 	glossID = glGetUniformLocation(programID, "GLOSS");
 	Light light(ambientLightColorID, lightColorID, lightPositionID, glm::vec3(0.3f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-	mCamera = new FPCamera();
-	mCamera->Walk(-40.0f);
+	mCamera = &thirdPersonCamera;
+	/*mCamera->Walk(-40.0f);
 	mCamera->Fly(5.0f);
 	mCamera->Pitch(5.0f);	
-	mCamera->UpdateViewMatrix();
+	mCamera->UpdateViewMatrix();*/
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
@@ -50,13 +50,20 @@ void Renderer::Draw()
 
 void Renderer::handleMouseScroll(bool up)
 {
-	if (!up)//scroll down
+	TPCamera* tpcamera = dynamic_cast<TPCamera*>(mCamera);
+	if (tpcamera == NULL)
 	{
-		mCamera->Walk(-1);
+		if (!up)
+			mCamera->Walk(-1);
+		else
+			mCamera->Walk(1);
 	}
-	else//scroll up
+	else
 	{
-		mCamera->Walk(1);
+		if (!up)//scroll down
+			tpcamera->setDistance(tpcamera->getDistance() + 1);
+		else
+			tpcamera->setDistance(tpcamera->getDistance() - 1);
 	}
 }
 
@@ -74,7 +81,7 @@ void Renderer::Update(float time) {
 	glUniform3f(cameraPositionID, mCamera->getPosition().x, mCamera->getPosition().y, mCamera->getPosition().z);
 }
 
-FPCamera* Renderer::getCamera() {
+Camera* Renderer::getCamera() {
 	return mCamera;
 }
 
@@ -85,40 +92,67 @@ Renderer::~Renderer()
 		delete shapes[i];
 	}
 	delete[]shapes;
-	delete mCamera;
+	//delete mCamera;
 }
 
 void Renderer::handleKeyboardPress(int key, int action) {
-	vec3 cameraVelocity = mCamera->getVelocity();
-	if (action == GLFW_RELEASE) {
-		switch (key) {
-		case GLFW_KEY_W:
-		case GLFW_KEY_S:
-			mCamera->setVelocity(cameraVelocity.x, cameraVelocity.y, 0);
-			break;
-		case GLFW_KEY_A:
-		case GLFW_KEY_D:
-			mCamera->setVelocity(0, cameraVelocity.y, cameraVelocity.z);
-			break;
+	if (key == GLFW_KEY_C&&action == GLFW_RELEASE)
+	{
+		if (mCamera == &thirdPersonCamera)
+		{
+			firstPersonCamera.copy(thirdPersonCamera);
+			mCamera = &firstPersonCamera;
+		}
+		else
+		{
+			thirdPersonCamera.copy(firstPersonCamera);
+			mCamera = &thirdPersonCamera;
+		}
+
+	}
+	TPCamera* tpcamera = dynamic_cast<TPCamera*>(mCamera);
+	if (tpcamera == NULL)
+	{//first person camera
+		vec3 cameraVelocity = mCamera->getVelocity();
+		if (action == GLFW_RELEASE) {
+			switch (key) {
+			case GLFW_KEY_W:
+			case GLFW_KEY_S:
+				mCamera->setVelocity(cameraVelocity.x, cameraVelocity.y, 0);
+
+				break;
+			case GLFW_KEY_A:
+			case GLFW_KEY_D:
+				mCamera->setVelocity(0, cameraVelocity.y, cameraVelocity.z);
+				break;
+			}
+		}
+		else {
+			if (key == GLFW_KEY_W)
+				mCamera->setVelocity(cameraVelocity.x, cameraVelocity.y, 10);
+			else if (key == GLFW_KEY_A)
+				mCamera->setVelocity(10, cameraVelocity.y, cameraVelocity.z);
+			else if (key == GLFW_KEY_S)
+				mCamera->setVelocity(cameraVelocity.x, cameraVelocity.y, -10);
+			else if (key == GLFW_KEY_D)
+				mCamera->setVelocity(-10, cameraVelocity.y, cameraVelocity.z);
 		}
 	}
-	else {
-		switch (key) {
-		case GLFW_KEY_W:
-			mCamera->setVelocity(cameraVelocity.x, cameraVelocity.y, 10);
-			break;
-		case GLFW_KEY_A:
-			mCamera->setVelocity(10, cameraVelocity.y, cameraVelocity.z);
-			break;
-		case GLFW_KEY_S:
-			mCamera->setVelocity(cameraVelocity.x, cameraVelocity.y, -10);
-			break;
-		case GLFW_KEY_D:
-			mCamera->setVelocity(-10, cameraVelocity.y, cameraVelocity.z);
-		}
+	else
+	{//third person camera
+		
+		if (key == GLFW_KEY_W)
+			mCamera->setRotation(mCamera->getRotation().pitch + 1, mCamera->getRotation().yaw, mCamera->getRotation().roll);
+		else if (key == GLFW_KEY_A)
+			mCamera->setRotation(mCamera->getRotation().pitch, mCamera->getRotation().yaw - 1, mCamera->getRotation().roll);
+		else if (key == GLFW_KEY_S)
+			mCamera->setRotation(mCamera->getRotation().pitch - 1, mCamera->getRotation().yaw, mCamera->getRotation().roll);
+		else if (key == GLFW_KEY_D)
+			mCamera->setRotation(mCamera->getRotation().pitch, mCamera->getRotation().yaw + 1, mCamera->getRotation().roll);
+
 	}
 }
 
 void Renderer::handleMouseMove(float movex, float movey) {
-	mCamera->setRotation(movey * 50, movex * 50, mCamera->getRotation().roll);
+	mCamera->setRotation(movey *50, movex *50, mCamera->getRotation().roll);
 }

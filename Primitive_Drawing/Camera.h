@@ -43,7 +43,7 @@ public:
 
 	void virtual UpdateViewMatrix() = 0;
 	void virtual Update(float time) = 0;
-
+	void copy(const Camera&);
 	void setVelocity(float, float, float);
 	void setRotation(float, float, float);
 	void setPosition(float, float, float);

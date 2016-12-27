@@ -5,7 +5,14 @@ TPCamera::TPCamera()
 	mUp = vec3(0, 1, 0);
 	mRight = vec3(1, 0, 0);
 	mDirection = vec3(0, 0, -1);
+	mDistance = 50;
+	mObjectPosition = vec3(0);
 	UpdateViewMatrix();
+}
+
+float TPCamera::getDistance()
+{
+	return mDistance;
 }
 
 void TPCamera::Fly(float distance) {

@@ -23,7 +23,9 @@ class Renderer
 	GLuint modelMatID;
 	GLuint glossID;
 	float lastTime;
-	FPCamera* mCamera;
+	Camera* mCamera;
+	TPCamera thirdPersonCamera;
+	FPCamera firstPersonCamera;
 	Shape** shapes;
 	int shapesCount;
 	mat4 projectionMatrix;
@@ -39,6 +41,6 @@ public:
 	void UpdateAspectRatio(float);
 	void handleKeyboardPress(int, int);
 	void handleMouseMove(float, float);
-	FPCamera* getCamera();
+	Camera* getCamera();
 	~Renderer();
 };
