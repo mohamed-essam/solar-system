@@ -121,13 +121,21 @@ void Shape::generateSphere(float radiusSize, unsigned int ringsNumber, unsigned 
 			indices[indicesCounter++] = (r + 1) * sectorsNumber + (s + 1); //3
 			indices[indicesCounter++] = (r + 1) * sectorsNumber + s; //4
 		}
+		else if (r != ringsBoundry) {
+			indices[indicesCounter++] = r * sectorsNumber + s; //1
+			indices[indicesCounter++] = r * sectorsNumber; //2	
+			indices[indicesCounter++] = (r + 1) * sectorsNumber; //3
+			indices[indicesCounter++] = r * sectorsNumber + s; //1
+			indices[indicesCounter++] = (r + 1) * sectorsNumber; //3
+			indices[indicesCounter++] = (r + 1) * sectorsNumber + s; //4
+		}
 	}
 }
 
 void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 {
 	const unsigned verticiesSize = 90 * 90 * (3 + 3 + 2);
-	const unsigned indicesSize = 89 * 89 * 6;
+	const unsigned indicesSize = 89 * 90 * 6;
 
 	switch (objectNumber)
 	{
