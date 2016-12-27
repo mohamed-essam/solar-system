@@ -39,6 +39,7 @@ void TPCamera::Yaw(float angle) {
 
 void TPCamera::Pitch(float angle) {
 	mRotation.pitch += angle;
+	mRotation.pitch = std::max(-90.0f, std::min(90.0f, mRotation.pitch));
 	mat4 rotationMat = rotate(mRotation.pitch, mRight);
 	vec4 tmp = rotationMat * vec4(mUp, 1.0f);
 	mUp = vec3(tmp.x, tmp.y, tmp.z);
@@ -60,6 +61,9 @@ void TPCamera::setDistance(float distance) {
 }
 
 void TPCamera::Update(float time) {
+	mUp = vec3(0, 1, 0);
+	mRight = vec3(1, 0, 0);
+	mDirection = vec3(0, 0, -1);
 	Yaw(mRotation.yawChange*time);
 	Pitch(mRotation.pitchChange*time);
 	Roll(mRotation.rollChange*time);
