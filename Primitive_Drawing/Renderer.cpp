@@ -142,13 +142,13 @@ void Renderer::handleKeyboardPress(int key, int action) {
 	{//third person camera
 		
 		if (key == GLFW_KEY_W)
-			mCamera->setRotation(mCamera->getRotation().pitch + 1, mCamera->getRotation().yaw, mCamera->getRotation().roll);
+			mCamera->setRotation(100, 0, mCamera->getRotation().roll);
 		else if (key == GLFW_KEY_A)
-			mCamera->setRotation(mCamera->getRotation().pitch, mCamera->getRotation().yaw - 1, mCamera->getRotation().roll);
+			mCamera->setRotation(0,  100, mCamera->getRotation().roll);
 		else if (key == GLFW_KEY_S)
-			mCamera->setRotation(mCamera->getRotation().pitch - 1, mCamera->getRotation().yaw, mCamera->getRotation().roll);
+			mCamera->setRotation(-100, 0, mCamera->getRotation().roll);
 		else if (key == GLFW_KEY_D)
-			mCamera->setRotation(mCamera->getRotation().pitch, mCamera->getRotation().yaw + 1, mCamera->getRotation().roll);
+			mCamera->setRotation(0, -100, mCamera->getRotation().roll);
 
 	}
 }
