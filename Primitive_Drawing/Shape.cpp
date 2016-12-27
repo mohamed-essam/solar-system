@@ -132,23 +132,23 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 	switch (objectNumber)
 	{
 	case 0:
-		shape = new Shape(verticiesSize / 8, 8, indicesSize);
+		shape = new Shape(verticiesSize / 8, 8, indicesSize);//arrays are done only once for sun & sky box 
 		Shape::generateSphere(1, 90, 90, shape->verts, shape->indices);
 		shape->rotationSelfRate = glm::vec3(0.0f, 5.0f, 0.0f);
 		shape->scale = glm::vec3(1.0f);
 		shape->gloss = 0.0f;
 		shape->skyBox = false;
-		shape->generateBuffers();
+		shape->generateBuffers();   //is done only once for sun & sky box 
 		shape->ID = 0;
 		shape->texture = new Texture("images/sun.jpg", 9);
 		break;
 
 	case 1:
-		shape = new Shape(verticiesSize / 8, 8, indicesSize);
+		shape = new Shape(verticiesSize / 8, 8, indicesSize);//arrays are done only once for the rest of the shapes
 		*shape = (*shapes[0]);
 
 
-		for (int i = 3; i < 6; i++)
+		for (int i = 3; i < 6; i++) //invert the normals
 		{
 			for (int j = 0; j < verticiesSize / 8; j++)
 			{
@@ -162,13 +162,13 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->scale = glm::vec3(0.1f);
 		shape->gloss = 1.0f;
 		shape->skyBox = false;
-		shape->generateBuffers();
+		shape->generateBuffers(); //is done only once for the rest of the shapes
 		shape->ID = 1;
 		shape->texture = new Texture("images/mercury.jpg", 0);
 		break;
 
 	case 2:
-		shape = new Shape(*shapes[1]);
+		shape = new Shape(*shapes[1]);  //shallow copy
 		shape->position.x = -7;
 		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
 		shape->rotationRate = glm::vec3(0.0f, 5.0f, 0.0f);

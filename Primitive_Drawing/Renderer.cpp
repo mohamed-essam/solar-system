@@ -2,7 +2,7 @@
 
 
 void Renderer::UpdateAspectRatio(float aspectRatio) {
-	projectionMatrix = glm::perspective(45.0f, aspectRatio, 0.1f, 10000.0f);
+	projectionMatrix = glm::perspective(45.0f, aspectRatio, 0.1f, 1000.0f);
 }
 
 void Renderer::Initialize()
@@ -28,7 +28,9 @@ void Renderer::Initialize()
 	glossID = glGetUniformLocation(programID, "GLOSS");
 	Light light(ambientLightColorID, lightColorID, lightPositionID, glm::vec3(0.3f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 	mCamera = new FPCamera();
-	mCamera->Fly(50.0f);
+	mCamera->Walk(-40.0f);
+	mCamera->Fly(5.0f);
+	mCamera->Pitch(5.0f);	
 	mCamera->UpdateViewMatrix();
 
 	glEnable(GL_DEPTH_TEST);
@@ -103,16 +105,16 @@ void Renderer::handleKeyboardPress(int key, int action) {
 	else {
 		switch (key) {
 		case GLFW_KEY_W:
-			mCamera->setVelocity(cameraVelocity.x, cameraVelocity.y, 40);
+			mCamera->setVelocity(cameraVelocity.x, cameraVelocity.y, 10);
 			break;
 		case GLFW_KEY_A:
-			mCamera->setVelocity(40, cameraVelocity.y, cameraVelocity.z);
+			mCamera->setVelocity(10, cameraVelocity.y, cameraVelocity.z);
 			break;
 		case GLFW_KEY_S:
-			mCamera->setVelocity(cameraVelocity.x, cameraVelocity.y, -40);
+			mCamera->setVelocity(cameraVelocity.x, cameraVelocity.y, -10);
 			break;
 		case GLFW_KEY_D:
-			mCamera->setVelocity(-40, cameraVelocity.y, cameraVelocity.z);
+			mCamera->setVelocity(-10, cameraVelocity.y, cameraVelocity.z);
 		}
 	}
 }
