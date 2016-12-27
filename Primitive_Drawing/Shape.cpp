@@ -148,7 +148,7 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->skyBox = false;
 		shape->generateBuffers();
 		shape->ID = 0;
-		shape->texture = new Texture("sun.jpg", 9);
+		shape->texture = new Texture("images/sun.jpg", 9);
 		break;
 
 	case 1:
@@ -172,7 +172,7 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->skyBox = false;
 		shape->generateBuffers();
 		shape->ID = 1;
-		shape->texture = new Texture("mercury.jpg", 0);
+		shape->texture = new Texture("images/mercury.jpg", 0);
 		break;
 
 	case 2:
@@ -184,7 +184,7 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->scale = glm::vec3(0.2f);
 		shape->skyBox = false;
 		shape->ID = 2;
-		shape->texture = new Texture("venus.jpg", 1);
+		shape->texture = new Texture("images/venus.jpg", 1);
 		break;
 	case 3:
 		shape = new Shape(*shapes[1]);
@@ -195,7 +195,7 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->scale = glm::vec3(0.3f);
 		shape->skyBox = false;
 		shape->ID = 3;
-		shape->texture = new Texture("earth.jpg", 2);
+		shape->texture = new Texture("images/earth.jpg", 2);
 		break;
 	case 4:
 		shape = new Shape(*shapes[1]);
@@ -206,7 +206,7 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->scale = glm::vec3(0.3f);
 		shape->skyBox = false;
 		shape->ID = 4;
-		shape->texture = new Texture("mars.jpg", 3);
+		shape->texture = new Texture("images/mars.jpg", 3);
 		break;
 	case 5:
 		shape = new Shape(*shapes[1]);
@@ -217,7 +217,7 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->scale = glm::vec3(0.6f);
 		shape->skyBox = false;
 		shape->ID = 5;
-		shape->texture = new Texture("jupiter.jpg", 4);
+		shape->texture = new Texture("images/jupiter.jpg", 4);
 		break;
 	case 6:
 		shape = new Shape(*shapes[1]);
@@ -228,7 +228,7 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->scale = glm::vec3(0.3f);
 		shape->skyBox = false;
 		shape->ID = 6;
-		shape->texture = new Texture("saturn.jpg", 5);
+		shape->texture = new Texture("images/saturn.jpg", 5);
 		break;
 	case 7:
 		shape = new Shape(*shapes[1]);
@@ -239,7 +239,7 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->scale = glm::vec3(0.3f);
 		shape->skyBox = false;
 		shape->ID = 7;
-		shape->texture = new Texture("uranus.jpg", 6);
+		shape->texture = new Texture("images/uranus.jpg", 6);
 		break;
 	case 8:
 		shape = new Shape(*shapes[1]);
@@ -250,7 +250,7 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->scale = glm::vec3(0.3f);
 		shape->skyBox = false;
 		shape->ID = 8;
-		shape->texture = new Texture("neptune.jpg", 7);
+		shape->texture = new Texture("images/neptune.jpg", 7);
 		break;
 	case 9:
 		shape = new Shape(*shapes[1]);
@@ -261,16 +261,16 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->scale = glm::vec3(0.3f);
 		shape->skyBox = false;
 		shape->ID = 9;
-		shape->texture = new Texture("pluto.jpg", 8);
+		shape->texture = new Texture("images/pluto.jpg", 8);
 		break;
 	case 10:
 		shape = new Shape(*shapes[0]);
 		shape->rotationSelfRate = glm::vec3(0.0f);
-		shape->scale = glm::vec3(1000.0f);
+		shape->scale = glm::vec3(300.0f);
 		shape->gloss = 0.0f;
 		shape->skyBox = true;
 		shape->ID = 10;
-		shape->texture = new Texture("stars.png", 10);
+		shape->texture = new Texture("images/stars.png", 10);
 		break;
 	}
 }
