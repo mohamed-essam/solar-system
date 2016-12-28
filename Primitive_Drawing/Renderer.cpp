@@ -77,6 +77,11 @@ void Renderer::Update(float time) {
 	vec3 newPosition = mCamera->getPosition();
 	CollisionDetector::colliderPosition(shapes, shapesCount, oldPosition, newPosition);
 	mCamera->setPosition(newPosition.x, newPosition.y, newPosition.z);
+	TPCamera* tpcamera = dynamic_cast<TPCamera*>(mCamera);
+	printf("%f", length(newPosition - oldPosition));
+	if (tpcamera != NULL) {
+		tpcamera->setDistance(length(newPosition));
+	}
 	mCamera->UpdateViewMatrix();
 	glUniform3f(cameraPositionID, mCamera->getPosition().x, mCamera->getPosition().y, mCamera->getPosition().z);
 }

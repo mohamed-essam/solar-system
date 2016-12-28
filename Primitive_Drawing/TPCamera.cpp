@@ -77,6 +77,7 @@ void TPCamera::Update(float time) {
 	mObjectPosition += mRight * velocity.x;
 	mObjectPosition += mUp * velocity.y;
 	mObjectPosition -= mDirection * velocity.z;
+	mPosition = mObjectPosition + (mDistance * mDirection);
 }
 
 TPCamera::~TPCamera()
