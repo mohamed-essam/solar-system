@@ -1,10 +1,10 @@
 #include "Shape.h"
 
 
-Shape& Shape::operator=(const Shape& sh) {//deep copy
+Shape& Shape::operator=(const Shape& sh) {// copy values
 	vertexCount = sh.vertexCount;
 	attributeCount = sh.attributeCount;
-	for (int i = 0; i < attributeCount * vertexCount; i++)
+	for (int i = 0; i < vertexCount; i++)
 	{
 		verts[i] = sh.verts[i];
 	}
@@ -28,7 +28,7 @@ Shape& Shape::operator=(const Shape& sh) {//deep copy
 	skyBox = sh.skyBox;
 	return *this;
 }
-Shape::Shape(const Shape & sh)//shallow copy
+void Shape::shallowCopy(const Shape& sh)//shallow copy
 {
 	vertexCount = sh.vertexCount;
 	attributeCount = sh.attributeCount;
@@ -49,10 +49,11 @@ Shape::Shape(const Shape & sh)//shallow copy
 	gloss = sh.gloss;
 	skyBox = sh.skyBox;
 }
-Shape::Shape(int vc, int ac, int ic) {
-	vertexCount = vc;
-	attributeCount = ac;
-	verts = new GLfloat[vertexCount * attributeCount];
+Shape::Shape() {}
+Shape::Shape(int vertexCount, int verticesCoordinatesCount, int indicesCount) {
+	this->vertexCount = vertexCount;
+	this->attributeCount = verticesCoordinatesCount;
+	verts = new Vertex[vertexCount];
 	modelMatrix = glm::mat4(1.0f);
 	position = glm::vec3(0.0f);
 	velocity = glm::vec3(0.0f);
@@ -62,7 +63,7 @@ Shape::Shape(int vc, int ac, int ic) {
 	rotationSelfRate = glm::vec3(0.0f);
 	finalTranslation = glm::vec3(0.0f);
 	scale = glm::vec3(1.0f);
-	indicesCount = ic;
+	this->indicesCount = indicesCount;
 	indices = new GLuint[indicesCount];
 	gloss = 1.0f;
 	skyBox = false;
@@ -137,11 +138,12 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 	const unsigned verticiesSize = 90 * 90 * (3 + 3 + 2);
 	const unsigned indicesSize = 89 * 90 * 6;
 
-	switch (objectNumber)
-	{
-	case 0:
+
+	if (objectNumber == 0) {
 		shape = new Shape(verticiesSize / 8, 8, indicesSize);//arrays are done only once for sun & sky box 
-		Shape::generateSphere(1, 90, 90, shape->verts, shape->indices);
+		GLfloat *tempVerts = reinterpret_cast<GLfloat*>(shape->verts);
+		GLuint *tempIndices = reinterpret_cast<GLuint*>(shape->indices);
+		Shape::generateSphere(1, 90, 90, tempVerts, tempIndices);
 		shape->rotationSelfRate = glm::vec3(0.0f, 5.0f, 0.0f);
 		shape->scale = glm::vec3(1.0f);
 		shape->gloss = 0.0f;
@@ -149,19 +151,15 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->generateBuffers();   //is done only once for sun & sky box 
 		shape->ID = 0;
 		shape->texture = new Texture("images/sun.jpg", 9);
-		break;
-
-	case 1:
+	}
+	else if (objectNumber == 1) {
 		shape = new Shape(verticiesSize / 8, 8, indicesSize);//arrays are done only once for the rest of the shapes
 		*shape = (*shapes[0]);
 
-
-		for (int i = 3; i < 6; i++) //invert the normals
+		for (int i = 0; i < verticiesSize / 8; i++)
 		{
-			for (int j = 0; j < verticiesSize / 8; j++)
-			{
-				shapes[1]->verts[j * 8 + i] *= -1;
-			}
+			for (int j = 0; j < 3; j++)
+				shape->verts[i].normalsCord[j] *= -1;
 		}
 		shape->position.x = -4;
 		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
@@ -173,10 +171,11 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->generateBuffers(); //is done only once for the rest of the shapes
 		shape->ID = 1;
 		shape->texture = new Texture("images/mercury.jpg", 0);
-		break;
+	}
 
-	case 2:
-		shape = new Shape(*shapes[1]);  //shallow copy
+	else if (objectNumber == 2) {
+		shape = new Shape();  //shallow copy
+		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -7;
 		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
 		shape->rotationRate = glm::vec3(0.0f, 5.0f, 0.0f);
@@ -185,9 +184,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->skyBox = false;
 		shape->ID = 2;
 		shape->texture = new Texture("images/venus.jpg", 1);
-		break;
-	case 3:
-		shape = new Shape(*shapes[1]);
+	}
+	else if (objectNumber == 3) {
+		shape = new Shape();  //shallow copy
+		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -10;
 		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
 		shape->rotationRate = glm::vec3(0.0f, 7.0f, 0.0f);
@@ -196,9 +196,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->skyBox = false;
 		shape->ID = 3;
 		shape->texture = new Texture("images/earth.jpg", 2);
-		break;
-	case 4:
-		shape = new Shape(*shapes[1]);
+	}
+	else if (objectNumber == 4) {
+		shape = new Shape();  //shallow copy
+		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -14;
 		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
 		shape->rotationRate = glm::vec3(0.0f, 3.0f, 0.0f);
@@ -207,9 +208,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->skyBox = false;
 		shape->ID = 4;
 		shape->texture = new Texture("images/mars.jpg", 3);
-		break;
-	case 5:
-		shape = new Shape(*shapes[1]);
+	}
+	else if (objectNumber == 5) {
+		shape = new Shape();  //shallow copy
+		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -19;
 		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
 		shape->rotationRate = glm::vec3(0.0f, 13.0f, 0.0f);
@@ -218,9 +220,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->skyBox = false;
 		shape->ID = 5;
 		shape->texture = new Texture("images/jupiter.jpg", 4);
-		break;
-	case 6:
-		shape = new Shape(*shapes[1]);
+	}
+	else if (objectNumber == 6) {
+		shape = new Shape();  //shallow copy
+		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -23;
 		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
 		shape->rotationRate = glm::vec3(0.0f, 7.5f, 0.0f);
@@ -229,9 +232,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->skyBox = false;
 		shape->ID = 6;
 		shape->texture = new Texture("images/saturn.jpg", 5);
-		break;
-	case 7:
-		shape = new Shape(*shapes[1]);
+	}
+	else if (objectNumber == 7) {
+		shape = new Shape();  //shallow copy
+		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -26;
 		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
 		shape->rotationRate = glm::vec3(0.0f, 4.0f, 0.0f);
@@ -240,9 +244,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->skyBox = false;
 		shape->ID = 7;
 		shape->texture = new Texture("images/uranus.jpg", 6);
-		break;
-	case 8:
-		shape = new Shape(*shapes[1]);
+	}
+	else if (objectNumber == 8) {
+		shape = new Shape();  //shallow copy
+		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -29;
 		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
 		shape->rotationRate = glm::vec3(0.0f, 11.0f, 0.0f);
@@ -251,9 +256,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->skyBox = false;
 		shape->ID = 8;
 		shape->texture = new Texture("images/neptune.jpg", 7);
-		break;
-	case 9:
-		shape = new Shape(*shapes[1]);
+	}
+	else if (objectNumber == 9) {
+		shape = new Shape();  //shallow copy
+		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -32;
 		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
 		shape->rotationRate = glm::vec3(0.0f, 1.5f, 0.0f);
@@ -262,17 +268,18 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->skyBox = false;
 		shape->ID = 9;
 		shape->texture = new Texture("images/pluto.jpg", 8);
-		break;
-	case 10:
-		shape = new Shape(*shapes[0]);
+	}
+	else if (objectNumber == 10) {
+		shape = new Shape();  //shallow copy
+		shape->shallowCopy(*shapes[0]);
 		shape->rotationSelfRate = glm::vec3(0.0f);
 		shape->scale = glm::vec3(300.0f);
 		shape->gloss = 0.0f;
 		shape->skyBox = true;
 		shape->ID = 10;
 		shape->texture = new Texture("images/stars.png", 10);
-		break;
 	}
+
 }
 
 bool Shape::isSkyBox()const

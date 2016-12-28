@@ -8,7 +8,13 @@
 #include <vector>
 using namespace glm;
 class Shape {
-	GLfloat* verts;
+	struct Vertex
+	{
+		GLfloat positionCord[3];
+		GLfloat textureCord[3];
+		GLfloat normalsCord[2];
+	};
+	Vertex* verts;
 	GLuint* indices;
 	int ID;
 	int attributeCount;
@@ -39,7 +45,9 @@ public:
 	Shape(int, int, int);
 	void render(GLuint, GLuint, glm::mat4&, glm::mat4&, GLuint, GLuint);
 	void update(float);
-	Shape(const Shape&);
+	Shape();
+	//Shape(const Shape&);
+	void shallowCopy(const Shape&);
 	Shape& operator=(const Shape&);
 	~Shape();
 };
