@@ -78,7 +78,6 @@ void Renderer::Update(float time) {
 	CollisionDetector::colliderPosition(shapes, shapesCount, oldPosition, newPosition);
 	mCamera->setPosition(newPosition.x, newPosition.y, newPosition.z);
 	TPCamera* tpcamera = dynamic_cast<TPCamera*>(mCamera);
-	printf("%f", length(newPosition - oldPosition));
 	if (tpcamera != NULL) {
 		tpcamera->setDistance(length(newPosition));
 	}
