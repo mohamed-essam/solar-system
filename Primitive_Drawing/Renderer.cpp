@@ -95,8 +95,8 @@ Renderer::~Renderer()
 	{
 		delete shapes[i];
 	}
+
 	delete[]shapes;
-	//delete mCamera;
 }
 
 void Renderer::handleKeyboardPress(int key, int action) {
