@@ -288,13 +288,22 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape->texture = new Texture("images/pluto.jpg", 8);
 	}
 	else if (objectNumber == 10) {
-		shape = new Shape();  //shallow copy
-		shape->shallowCopy(*shapes[0]);
+	//	shape = new Shape();  //shallow copy
+		//shape->shallowCopy(*shapes[0]);
+		shape = new Shape(verticiesSize / 8, 8, indicesSize);//arrays are done only once for the rest of the shapes
+		*shape = (*shapes[0]);
 		shape->rotationSelfRate = glm::vec3(0.0f);
 		shape->scale = glm::vec3(300.0f);
 		shape->gloss = 0.0f;
 		shape->skyBox = true;
 		shape->ID = 10;
+		for (int i = 1; i < shape->indicesCount; i += 6)
+		{
+			std::swap(shape->indices[i], shape->indices[i + 1]);
+			std::swap(shape->indices[i + 3], shape->indices[i + 4]);
+
+		}
+		shape->generateBuffers();
 		shape->texture = new Texture("images/stars.png", 10);
 	}
 
@@ -316,7 +325,7 @@ mat4 Shape::getModelMatrix()const
 }
 
 Shape::~Shape() {
-	if (ID == 0|| ID == 1) {
+	if (ID == 0|| ID == 1 || ID == 10) {
 		delete[] verts;
 		delete[] indices;
 		glDeleteBuffers(1, &VO);

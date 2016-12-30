@@ -32,6 +32,10 @@ void Renderer::Initialize()
 	mCamera->Fly(5.0f);
 	mCamera->Pitch(5.0f);	
 	mCamera->UpdateViewMatrix();*/
+	isCollisionEnabled = true;
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);// by default 
+	glFrontFace(GL_CW);// by default 
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
@@ -77,6 +81,7 @@ void Renderer::Update(float time) {
 	vec3 oldPosition = mCamera->getPosition();// save for collision
 	mCamera->Update(time / simulationSpeed);
 	vec3 newPosition = mCamera->getPosition();
+	if(isCollisionEnabled)
 	CollisionDetector::colliderPosition(shapes, shapesCount, oldPosition, newPosition);
 	mCamera->setPosition(newPosition.x, newPosition.y, newPosition.z);
 	TPCamera* tpcamera = dynamic_cast<TPCamera*>(mCamera);
@@ -102,7 +107,9 @@ Renderer::~Renderer()
 }
 
 void Renderer::handleKeyboardPress(int key, int action) {
-	if (key == GLFW_KEY_C&&action == GLFW_RELEASE)
+	if (key == GLFW_KEY_P&&action == GLFW_RELEASE)
+		isCollisionEnabled = !isCollisionEnabled;
+	else if (key == GLFW_KEY_C&&action == GLFW_RELEASE)
 	{
 		if (mCamera == &thirdPersonCamera)
 		{

@@ -33,6 +33,7 @@ class Renderer
 	vec3 lightColor;
 	vec3 ambientColor;
 	float simulationSpeed;
+	bool isCollisionEnabled;
 public:
 
 	void Initialize();
