@@ -32,6 +32,7 @@ class Renderer
 	vec3 lightPosition;
 	vec3 lightColor;
 	vec3 ambientColor;
+	float simulationSpeed;
 public:
 
 	void Initialize();

@@ -36,6 +36,7 @@ void Renderer::Initialize()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 
+	simulationSpeed = 1.0f;
 }
 
 void Renderer::Draw()
@@ -68,12 +69,13 @@ void Renderer::handleMouseScroll(bool up)
 }
 
 void Renderer::Update(float time) {
+	time *= simulationSpeed;
 	for (int i = 0; i < shapesCount; i++)
 	{
 		shapes[i]->update(time);
 	}
 	vec3 oldPosition = mCamera->getPosition();// save for collision
-	mCamera->Update(time);
+	mCamera->Update(time / simulationSpeed);
 	vec3 newPosition = mCamera->getPosition();
 	CollisionDetector::colliderPosition(shapes, shapesCount, oldPosition, newPosition);
 	mCamera->setPosition(newPosition.x, newPosition.y, newPosition.z);
@@ -144,7 +146,6 @@ void Renderer::handleKeyboardPress(int key, int action) {
 	}
 	else
 	{//third person camera
-		
 		if (key == GLFW_KEY_W)
 			mCamera->setRotation(100, 0, mCamera->getRotation().roll);
 		else if (key == GLFW_KEY_A)
@@ -153,7 +154,13 @@ void Renderer::handleKeyboardPress(int key, int action) {
 			mCamera->setRotation(-100, 0, mCamera->getRotation().roll);
 		else if (key == GLFW_KEY_D)
 			mCamera->setRotation(0, -100, mCamera->getRotation().roll);
-
+	}
+	if (key == GLFW_KEY_UP && action != GLFW_RELEASE) {
+		simulationSpeed += 0.1f;
+	}
+	else if (key == GLFW_KEY_DOWN && action != GLFW_RELEASE) {
+		simulationSpeed -= 0.1f;
+		if (simulationSpeed < 0.1f) simulationSpeed = 0.1f;
 	}
 }
 
