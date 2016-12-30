@@ -147,6 +147,7 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		//Shape::generateSphere(1, 90, 90, tempVerts, shape->indices);
 		Shape::generateSphere(1, 90, 90, shape->verts, shape->indices);
 		shape->rotationSelfRate = glm::vec3(0.0f, 5.0f, 0.0f);
+		shape->rotationSelf = vec3(7.25f, 0.0f, 0.0f);
 		shape->scale = glm::vec3(1.0f);
 		shape->gloss = 0.0f;
 		shape->skyBox = false;
@@ -171,9 +172,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 			}
 		}
 		shape->position.x = -4;
-		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
-		shape->rotationRate = glm::vec3(0.0f, 10.0f, 0.0f);
-		shape->rotationSelfRate = glm::vec3(0.0f, 20.0f, 0.0f);
+		shape->rotation = vec3(7, 0, 0);
+		shape->rotationSelf = glm::vec3(0.03f, 0.0f, 0.0f);
+		shape->rotationRate = glm::vec3(0.0f, 149.44f, 0.0f);
+		shape->rotationSelfRate = glm::vec3(0.0f, 224.0f, 0.0f);
 		shape->scale = glm::vec3(0.1f);
 		shape->gloss = 1.0f;
 		shape->skyBox = false;
@@ -186,9 +188,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape = new Shape();  //shallow copy
 		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -7;
-		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
-		shape->rotationRate = glm::vec3(0.0f, 5.0f, 0.0f);
-		shape->rotationSelfRate = glm::vec3(0.0f, 10.0f, 0.0f);
+		shape->rotation = vec3(3.39, 0, 0);
+		shape->rotationSelf = glm::vec3(2.64f, 0.0f, 0.0f);
+		shape->rotationRate = glm::vec3(0.0f, 58.44f, 0.0f);
+		shape->rotationSelfRate = glm::vec3(0.0f, 54.0f, 0.0f);
 		shape->scale = glm::vec3(0.2f);
 		shape->skyBox = false;
 		shape->ID = 2;
@@ -198,9 +201,9 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape = new Shape();  //shallow copy
 		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -10;
-		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
-		shape->rotationRate = glm::vec3(0.0f, 7.0f, 0.0f);
-		shape->rotationSelfRate = glm::vec3(0.0f, 25.0f, 0.0f);
+		shape->rotationSelf = glm::vec3(23.44f, 0.0f, 0.0f);
+		shape->rotationRate = glm::vec3(0.0f, 36.0f, 0.0f);
+		shape->rotationSelfRate = glm::vec3(0.0f, 13140.0f, 0.0f);
 		shape->scale = glm::vec3(0.3f);
 		shape->skyBox = false;
 		shape->ID = 3;
@@ -210,9 +213,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape = new Shape();  //shallow copy
 		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -14;
-		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
-		shape->rotationRate = glm::vec3(0.0f, 3.0f, 0.0f);
-		shape->rotationSelfRate = glm::vec3(0.0f, 15.0f, 0.0f);
+		shape->rotation = vec3(1.85, 0, 0);
+		shape->rotationSelf = glm::vec3(25.19f, 0.0f, 0.0f);
+		shape->rotationRate = glm::vec3(0.0f, 18.95f, 0.0f);
+		shape->rotationSelfRate = glm::vec3(0.0f, 12614.0f, 0.0f);
 		shape->scale = glm::vec3(0.3f);
 		shape->skyBox = false;
 		shape->ID = 4;
@@ -222,9 +226,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape = new Shape();  //shallow copy
 		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -19;
-		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
-		shape->rotationRate = glm::vec3(0.0f, 13.0f, 0.0f);
-		shape->rotationSelfRate = glm::vec3(0.0f, 15.0f, 0.0f);
+		shape->rotation = vec3(1.3, 0, 0);
+		shape->rotationSelf = glm::vec3(3.13f, 0.0f, 0.0f);
+		shape->rotationRate = glm::vec3(0.0f, 3.0f, 0.0f);
+		shape->rotationSelfRate = glm::vec3(0.0f, 31536.0f, 0.0f);
 		shape->scale = glm::vec3(0.6f);
 		shape->skyBox = false;
 		shape->ID = 5;
@@ -234,9 +239,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape = new Shape();  //shallow copy
 		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -23;
-		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
-		shape->rotationRate = glm::vec3(0.0f, 7.5f, 0.0f);
-		shape->rotationSelfRate = glm::vec3(0.0f, 15.0f, 0.0f);
+		shape->rotation = vec3(2.49, 0, 0);
+		shape->rotationSelf = glm::vec3(26.73f, 0.0f, 0.0f);
+		shape->rotationRate = glm::vec3(0.0f, 1.22f, 0.0f);
+		shape->rotationSelfRate = glm::vec3(0.0f, 28669.0f, 0.0f);
 		shape->scale = glm::vec3(0.3f);
 		shape->skyBox = false;
 		shape->ID = 6;
@@ -246,9 +252,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape = new Shape();  //shallow copy
 		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -26;
-		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
-		shape->rotationRate = glm::vec3(0.0f, 4.0f, 0.0f);
-		shape->rotationSelfRate = glm::vec3(0.0f, 15.0f, 0.0f);
+		shape->rotation = vec3(0.77, 0, 0);
+		shape->rotationSelf = glm::vec3(82.23f, 0.0f, 0.0f);
+		shape->rotationRate = glm::vec3(0.0f, 0.428f, 0.0f);
+		shape->rotationSelfRate = glm::vec3(0.0f, 18550.0f, 0.0f);
 		shape->scale = glm::vec3(0.3f);
 		shape->skyBox = false;
 		shape->ID = 7;
@@ -258,9 +265,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape = new Shape();  //shallow copy
 		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -29;
-		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
-		shape->rotationRate = glm::vec3(0.0f, 11.0f, 0.0f);
-		shape->rotationSelfRate = glm::vec3(0.0f, 15.0f, 0.0f);
+		shape->rotation = vec3(1.77, 0, 0);
+		shape->rotationSelf = glm::vec3(28.32f, 0.0f, 0.0f);
+		shape->rotationRate = glm::vec3(0.0f, 0.218f, 0.0f);
+		shape->rotationSelfRate = glm::vec3(0.0f, 19710.0f, 0.0f);
 		shape->scale = glm::vec3(0.3f);
 		shape->skyBox = false;
 		shape->ID = 8;
@@ -270,9 +278,10 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape = new Shape();  //shallow copy
 		shape->shallowCopy(*shapes[1]);
 		shape->position.x = -32;
-		shape->rotationSelf = glm::vec3(45.0f, 0.0f, 0.0f);
-		shape->rotationRate = glm::vec3(0.0f, 1.5f, 0.0f);
-		shape->rotationSelfRate = glm::vec3(0.0f, 15.0f, 0.0f);
+		shape->rotation = vec3(17.2, 0, 0);
+		shape->rotationSelf = glm::vec3(57.47f, 0.0f, 0.0f);
+		shape->rotationRate = glm::vec3(0.0f, 0.145f, 0.0f);
+		shape->rotationSelfRate = glm::vec3(0.0f, 1900.0f, 0.0f);
 		shape->scale = glm::vec3(0.3f);
 		shape->skyBox = false;
 		shape->ID = 9;
