@@ -8,15 +8,15 @@
 #include <vector>
 using namespace glm;
 class Shape {
-/*	struct Vertex
+	struct Vertex
 	{
 		GLfloat positionCord[3];
-		GLfloat textureCord[3];
-		GLfloat normalsCord[2];
+		GLfloat normalsCord[3];
+		GLfloat texturesCord[2];
 
-	};*/
-	//Vertex* verts;
-	GLfloat* verts;
+	};
+	Vertex* verts;
+	//GLfloat* verts;
 	GLuint* indices;
 	int ID;
 	int attributeCount;

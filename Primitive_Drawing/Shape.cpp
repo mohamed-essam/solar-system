@@ -4,8 +4,8 @@
 Shape& Shape::operator=(const Shape& sh) {// copy values
 	vertexCount = sh.vertexCount;
 	attributeCount = sh.attributeCount;
-	//for (int i = 0; i < vertexCount; i++)
-	for (int i = 0; i < attributeCount *vertexCount; i++)
+	for (int i = 0; i < vertexCount; i++)
+//	for (int i = 0; i < attributeCount *vertexCount; i++)
 	{
 		verts[i] = sh.verts[i];
 	}
@@ -54,8 +54,8 @@ Shape::Shape() {}
 Shape::Shape(int vertexCount, int verticesCoordinatesCount, int indicesCount) {
 	this->vertexCount = vertexCount;
 	this->attributeCount = verticesCoordinatesCount;
-	//verts = new Vertex[vertexCount];
-	verts = new GLfloat[vertexCount*verticesCoordinatesCount];
+	verts = new Vertex[vertexCount];
+	//verts = new GLfloat[vertexCount*verticesCoordinatesCount];
 	modelMatrix = glm::mat4(1.0f);
 	position = glm::vec3(0.0f);
 	velocity = glm::vec3(0.0f);
@@ -108,6 +108,7 @@ void Shape::generateSphere(float radiusSize, unsigned int ringsNumber, unsigned 
 		vertices[verticesSizeCounter++] = y * radiusSize;
 		vertices[verticesSizeCounter++] = z * radiusSize;
 
+		
 		vertices[verticesSizeCounter++] = -x;
 		vertices[verticesSizeCounter++] = -y;
 		vertices[verticesSizeCounter++] = -z;
@@ -143,9 +144,9 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 
 	if (objectNumber == 0) {
 		shape = new Shape(verticiesSize / 8, 8, indicesSize);//arrays are done only once for sun & sky box 
-	//	GLfloat *tempVerts = reinterpret_cast<GLfloat*>(shape->verts);
-		//Shape::generateSphere(1, 90, 90, tempVerts, shape->indices);
-		Shape::generateSphere(1, 90, 90, shape->verts, shape->indices);
+		GLfloat *tempVerts = reinterpret_cast<GLfloat*>(shape->verts);
+		Shape::generateSphere(1, 90, 90, tempVerts, shape->indices);
+		//Shape::generateSphere(1, 90, 90, shape->verts, shape->indices);
 		shape->rotationSelfRate = glm::vec3(0.0f, 5.0f, 0.0f);
 		shape->rotationSelf = vec3(7.25f, 0.0f, 0.0f);
 		shape->scale = glm::vec3(1.0f);
@@ -159,18 +160,18 @@ void Shape::generateShape(Shape *& shape, Shape **shapes, int objectNumber)
 		shape = new Shape(verticiesSize / 8, 8, indicesSize);//arrays are done only once for the rest of the shapes
 		*shape = (*shapes[0]);
 
-		/*for (int i = 0; i < verticiesSize / 8; i++)
+		for (int i = 0; i < verticiesSize / 8; i++)
 		{
 			for (int j = 0; j < 3; j++)
 				shape->verts[i].normalsCord[j] *= -1;
-		}*/
-		for (int i = 3; i < 6; i++) //invert the normals
+		}
+	/*	for (int i = 3; i < 6; i++) //invert the normals
 		{
 			for (int j = 0; j < verticiesSize / 8; j++)
 			{
 				shape->verts[j * 8 + i] *= -1;
 			}
-		}
+		}*/
 		shape->position.x = -4;
 		shape->rotation = vec3(7, 0, 0);
 		shape->rotationSelf = glm::vec3(0.03f, 0.0f, 0.0f);

@@ -32,6 +32,11 @@ void main()
 	vec3 S = LIGHT_COLOR * cosTheta;
 
 	float att = exp(-pow((length(LIGHT_POSITION - pos) / 100),2));
+	//float att = 1.0/(1.0+pow((length(LIGHT_POSITION - pos) / 100),2));
 
 	c = A + att * (D + (GLOSS * S));
+
+
+	//vec3 gamma = vec3(1.0/2.2);
+	//c = pow(c, gamma);
 }
