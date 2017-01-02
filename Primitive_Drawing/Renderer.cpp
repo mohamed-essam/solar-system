@@ -33,6 +33,7 @@ void Renderer::Initialize()
 	mCamera->Pitch(5.0f);	
 	mCamera->UpdateViewMatrix();*/
 	isCollisionEnabled = true;
+	isResumed = true;
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);// by default 
 	glFrontFace(GL_CW);// by default 
@@ -74,6 +75,7 @@ void Renderer::handleMouseScroll(bool up)
 
 void Renderer::Update(float time) {
 	time *= simulationSpeed;
+	if(isResumed)
 	for (int i = 0; i < shapesCount; i++)
 	{
 		shapes[i]->update(time);
@@ -107,7 +109,9 @@ Renderer::~Renderer()
 }
 
 void Renderer::handleKeyboardPress(int key, int action) {
-	if (key == GLFW_KEY_P&&action == GLFW_RELEASE)
+	if (key == GLFW_KEY_SPACE&&action == GLFW_RELEASE)
+		isResumed = !isResumed;
+	else if (key == GLFW_KEY_P&&action == GLFW_RELEASE)
 		isCollisionEnabled = !isCollisionEnabled;
 	else if (key == GLFW_KEY_C&&action == GLFW_RELEASE)
 	{

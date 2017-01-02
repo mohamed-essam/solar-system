@@ -18,6 +18,7 @@ class Shape {
 	Vertex* verts;
 	//GLfloat* verts;
 	GLuint* indices;
+	
 	int ID;
 	int attributeCount;
 	int vertexCount;
