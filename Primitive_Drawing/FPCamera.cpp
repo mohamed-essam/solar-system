@@ -10,9 +10,8 @@ FPCamera::FPCamera()
 }
 
 
-void FPCamera::Move(glm::vec3 dis) {
-	glm::vec3 newPos = dis + mPosition;
-	mPosition = newPos;
+void FPCamera::Move(vec3 dis) {
+	mPosition += dis;
 }
 
 void FPCamera::Walk(float distance) {
