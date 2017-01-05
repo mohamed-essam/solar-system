@@ -29,9 +29,9 @@ void FPCamera::Fly(float distance) {
 void FPCamera::Roll(float angle) {
 	mRotation.roll += angle;
 	mat4 rotationMat = rotate(mRotation.roll, mDirection);
-	vec4 tmp = rotationMat * vec4(mUp, 1.0f);
+	vec4 tmp = rotationMat * vec4(mUp, 0.0f);
 	mUp = vec3(tmp.x, tmp.y, tmp.z);
-	tmp = rotationMat * vec4(mRight, 1.0f);
+	tmp = rotationMat * vec4(mRight,0.0f);
 	mRight = vec3(tmp.x, tmp.y, tmp.z);
 }
 
@@ -39,18 +39,18 @@ void FPCamera::Pitch(float angle) {
 	mRotation.pitch += angle;
 	mRotation.pitch = std::max(-90.0f, std::min(90.0f, mRotation.pitch));
 	mat4 rotationMat = rotate(mRotation.pitch, mRight);
-	vec4 tmp = rotationMat * vec4(mUp, 1.0f);
+	vec4 tmp = rotationMat * vec4(mUp, 0.0f);
 	mUp = vec3(tmp.x, tmp.y, tmp.z);
-	tmp = rotationMat * vec4(mDirection, 1.0f);
+	tmp = rotationMat * vec4(mDirection, 0.0f);
 	mDirection = vec3(tmp.x, tmp.y, tmp.z);
 }
 
 void FPCamera::Yaw(float angle) {
 	mRotation.yaw += angle;
 	mat4 rotationMat = rotate(mRotation.yaw, mUp);
-	vec4 tmp = rotationMat * vec4(mDirection, 1.0f);
+	vec4 tmp = rotationMat * vec4(mDirection, 0.0f);
 	mDirection = vec3(tmp.x, tmp.y, tmp.z);
-	tmp = rotationMat * vec4(mRight, 1.0f);
+	tmp = rotationMat * vec4(mRight,0.0f);
 	mRight = vec3(tmp.x, tmp.y, tmp.z);
 }
 
@@ -68,6 +68,7 @@ void FPCamera::Update(float time) {
 	Roll(mRotation.rollChange*time);
 	Walk(velocity.z * time);
 	Strafe(velocity.x * time);
+	Fly(velocity.y * time);
 }
 
 FPCamera::~FPCamera()

@@ -19,6 +19,7 @@ public:
 	void UpdateViewMatrix();
 	void Update(float time);
 	void setDistance(float distance);
-
+	vec3 getTargetPosition();
+	void setTargetPosition(vec3);
 	~TPCamera();
 };

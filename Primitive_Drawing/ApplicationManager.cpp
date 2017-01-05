@@ -21,7 +21,7 @@ void ApplicationManager::updateScreen() {
 	float time = (float)(glfwGetTime() - mTime);
 	mTime = glfwGetTime();
 	mRenderer->Update(time);
-	mRenderer->getCamera()->setRotation(0.0, 0.0, 0.0);
+	//mRenderer->getCamera()->setRotation(0.0, 0.0, 0.0);
 	mRenderer->Draw();
 	glfwSwapBuffers(mWindow); 
 	glfwPollEvents();

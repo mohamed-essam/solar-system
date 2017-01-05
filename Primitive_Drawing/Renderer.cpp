@@ -26,7 +26,7 @@ void Renderer::Initialize()
 	cameraPositionID = glGetUniformLocation(programID, "CAMERA_POSITION");
 	modelMatID = glGetUniformLocation(programID, "ModelMat");
 	glossID = glGetUniformLocation(programID, "GLOSS");
-	Light light(ambientLightColorID, lightColorID, lightPositionID, glm::vec3(0.3f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	Light light(ambientLightColorID, lightColorID, lightPositionID, glm::vec3(0.25f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 	mCamera = &thirdPersonCamera;
 	/*mCamera->Walk(-40.0f);
 	mCamera->Fly(5.0f);
@@ -35,8 +35,8 @@ void Renderer::Initialize()
 	isCollisionEnabled = true;
 	isResumed = true;
 	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);// by default 
-	glFrontFace(GL_CW);// by default 
+	glCullFace(GL_BACK); 
+	glFrontFace(GL_CW); 
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
@@ -127,8 +127,8 @@ void Renderer::handleKeyboardPress(int key, int action) {
 		}
 
 	}
-	TPCamera* tpcamera = dynamic_cast<TPCamera*>(mCamera);
-	if (tpcamera == NULL)
+	//TPCamera* tpcamera = dynamic_cast<TPCamera*>(mCamera);
+	if (mCamera == &firstPersonCamera)
 	{//first person camera
 		vec3 cameraVelocity = mCamera->getVelocity();
 		if (action == GLFW_RELEASE) {
@@ -142,6 +142,11 @@ void Renderer::handleKeyboardPress(int key, int action) {
 			case GLFW_KEY_D:
 				mCamera->setVelocity(0, cameraVelocity.y, cameraVelocity.z);
 				break;
+
+			case GLFW_KEY_R:
+			case GLFW_KEY_F:
+				mCamera->setVelocity(cameraVelocity.x, 0, cameraVelocity.z);
+				break;
 			}
 		}
 		else {
@@ -153,18 +158,28 @@ void Renderer::handleKeyboardPress(int key, int action) {
 				mCamera->setVelocity(cameraVelocity.x, cameraVelocity.y, -10);
 			else if (key == GLFW_KEY_D)
 				mCamera->setVelocity(-10, cameraVelocity.y, cameraVelocity.z);
+			if (key == GLFW_KEY_R)
+				mCamera->setVelocity(cameraVelocity.x, 10, cameraVelocity.z);
+				
+			else if(key == GLFW_KEY_F)
+				mCamera->setVelocity(cameraVelocity.x, -10, cameraVelocity.z);
 		}
 	}
 	else
 	{//third person camera
-		if (key == GLFW_KEY_W)
-			mCamera->setRotation(100, 0, mCamera->getRotation().roll);
-		else if (key == GLFW_KEY_A)
-			mCamera->setRotation(0,  100, mCamera->getRotation().roll);
-		else if (key == GLFW_KEY_S)
-			mCamera->setRotation(-100, 0, mCamera->getRotation().roll);
-		else if (key == GLFW_KEY_D)
-			mCamera->setRotation(0, -100, mCamera->getRotation().roll);
+		if (action == GLFW_RELEASE) {
+			mCamera->setRotation(0, 0, mCamera->getRotation().roll);
+		}
+		else {
+			if (key == GLFW_KEY_W)
+				mCamera->setRotation(100, 0, mCamera->getRotation().roll);
+			else if (key == GLFW_KEY_A)
+				mCamera->setRotation(0, 100, mCamera->getRotation().roll);
+			else if (key == GLFW_KEY_S)
+				mCamera->setRotation(-100, 0, mCamera->getRotation().roll);
+			else if (key == GLFW_KEY_D)
+				mCamera->setRotation(0, -100, mCamera->getRotation().roll);
+		}
 	}
 	if (key == GLFW_KEY_UP && action != GLFW_RELEASE) {
 		simulationSpeed += 0.1f;
