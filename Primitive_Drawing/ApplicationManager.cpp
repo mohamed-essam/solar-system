@@ -50,7 +50,7 @@ void ApplicationManager::updateScreen() {
 	 mouseX = (float)screenWidth / 2;
 	 mouseY = (float)screenHeight / 2;
 
-	 mWindow = glfwCreateWindow(screenWidth, screenHeight, "3D Solar System", NULL, NULL);
+	 mWindow = glfwCreateWindow(screenWidth, screenHeight, "3D Solar System", monitor, NULL);
 	
 	 if (mWindow == NULL) {
 		 fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
